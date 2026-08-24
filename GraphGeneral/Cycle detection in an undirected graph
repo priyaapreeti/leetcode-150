@@ -1,0 +1,46 @@
+class Solution {
+    public boolean isCycle(int V, int[][] edges) {
+        // adjacency list first
+        List<Integer>[] graph= new ArrayList[V];
+        for(int i=0; i<V; i++){
+            graph[i]=new ArrayList<>();
+        }
+        for(int edge[]: edges){
+            int u=edge[0];
+            int v=edge[1];
+            graph[u].add(v);
+            graph[v].add(u);
+        }
+        //create boolean visited
+        boolean visited[]= new  boolean[V];
+        
+        //handle disconnected graph cases
+        for(int i=0; i<V; i++){
+            if(!visited[i]){
+                if(bfs(i ,-1, graph, visited)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean bfs(int node, int parent, List<Integer>[] graph, boolean[] visited){
+        Queue<int[]> q= new LinkedList<>();//pair, node, parent
+        q.offer(new int[]{node, parent});
+        visited[node]=true;
+        while(!q.isEmpty()){
+            int[] cur= q.poll();
+            int cnode=cur[0];
+            int cp=cur[1];
+            for(int nei: graph[cnode]){
+                if(!visited[nei]){
+                    visited[nei]=true;
+                    q.offer(new int[]{nei, cnode});
+                }else if(nei!=cp){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
