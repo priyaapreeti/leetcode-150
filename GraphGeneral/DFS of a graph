@@ -1,0 +1,19 @@
+class Solution {
+    public ArrayList<Integer> dfs(ArrayList<ArrayList<Integer>> adj) {
+        // code here
+        int n=adj.size();
+        ArrayList<Integer> ans= new ArrayList<>();
+        boolean visited[]= new boolean[n];
+        
+        DFS(adj, 0, ans, visited);
+        return ans;
+    }
+    public void DFS(ArrayList<ArrayList<Integer>> adj, int u, ArrayList<Integer> ans, boolean[] visited){
+        if(visited[u]==true) return;
+        visited[u]=true;
+        ans.add(u);
+        for(int i: adj.get(u)){
+            if(!visited[i]) DFS(adj, i, ans, visited);
+        }
+    }
+}
