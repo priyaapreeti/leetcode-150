@@ -17,14 +17,15 @@ class Solution {
         return false;
     }
     public boolean dfs(ArrayList<ArrayList<Integer>> adj, int u, boolean[] visited, boolean[] recStack){
-        if(recStack[u]) return true; //cycle exists
-        if(visited[u]) return false; //just visited
+        //if(recStack[u]) return true; //cycle exists
+        //if(visited[u]) return false; //just visited
         
         recStack[u]=true;
         visited[u]=true;
         
         for(int v:adj.get(u)){
-            if(dfs(adj, v, visited, recStack)) return true;
+            if(!visited[v] && dfs(adj, v, visited, recStack)) return true;
+            else if(recStack[v]) return true;
         }
         recStack[u]=false;
         return false;
